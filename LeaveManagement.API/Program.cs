@@ -1,4 +1,5 @@
 using LeaveManagement.API.Data;
+using LeaveManagement.API.Mappings;
 using LeaveManagement.API.Repositories.Interface;
 using LeaveManagement.API.Repositories.Service;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,8 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("LeaveManagementCo
 builder.Services.AddScoped<IEmployee, Employee>();
 builder.Services.AddScoped<ILeave, Leave>();
 
+//AutoMapper Injection
+builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
