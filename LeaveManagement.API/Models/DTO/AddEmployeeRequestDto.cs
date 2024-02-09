@@ -18,6 +18,10 @@ namespace LeaveManagement.API.Models.DTO
         [EmailAddress]
         public string Email { get; set; }
 
+
+        [Required]
+        public string Password { get; set; }
+
         public DateTime BirthDate { get; set; }
         [Required]
 

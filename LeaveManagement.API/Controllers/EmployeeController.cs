@@ -20,6 +20,20 @@ namespace LeaveManagement.API.Controllers
             this.employee = employee;
             this.mapper = mapper;
         }
+        //Login
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+
+            var employeeDomain = await employee.Login(loginDto);
+            if (employeeDomain == null)
+            {
+                return NotFound();
+            }
+            return Ok(employeeDomain);
+
+        }
 
         //Get All Employees
         [HttpGet]

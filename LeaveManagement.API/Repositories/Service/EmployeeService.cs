@@ -1,4 +1,6 @@
 ﻿using LeaveManagement.API.Data;
+using LeaveManagement.API.Models.Domain;
+using LeaveManagement.API.Models.DTO;
 using LeaveManagement.API.Repositories.Interface;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -15,22 +17,27 @@ namespace LeaveManagement.API.Repositories.Service
             this.dBContext = dBContext;
 
         }
-        public Task<List<Models.Domain.Employee>> GetAllAsync()
+        public async Task<List<Models.Domain.Employee>> GetAllAsync()
         {
-            return dBContext.Employees.ToListAsync();
+            return await dBContext.Employees.ToListAsync();
         }
 
 
         public async Task<Models.Domain.Employee> CreateAsync(Models.Domain.Employee employee)
         {
-            await dBContext.AddAsync(employee);
+            await dBContext.Employees.AddAsync(employee);
             await dBContext.SaveChangesAsync();
             return employee;
         }
 
         public async Task<Models.Domain.Employee> GetByIdAsync(Guid id)
         {
-           return dBContext.Employees.FirstOrDefault(x=>x.EmployeeId ==id);
+           return await dBContext.Employees.FirstOrDefaultAsync(x=>x.EmployeeId ==id);
+        }
+
+        public async Task<Employee> Login(LoginDto loginDto)
+        {
+            return await dBContext.Employees.FirstOrDefaultAsync(x => x.Email == loginDto.Email && x.Password == loginDto.Password);
         }
     }
 }

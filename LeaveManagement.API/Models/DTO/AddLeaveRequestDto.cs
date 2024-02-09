@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LeaveManagement.API.Models.DTO
 {
-    public class LeaveDto
+    public class AddLeaveRequestDto
     {
-        [Key]
+        [Required]
         public Guid LeaveId { get; set; }
 
         [Required]
@@ -28,6 +28,5 @@ namespace LeaveManagement.API.Models.DTO
         public string Reason { get; set; }
 
         public string Status { get; set; }
-
     }
 }

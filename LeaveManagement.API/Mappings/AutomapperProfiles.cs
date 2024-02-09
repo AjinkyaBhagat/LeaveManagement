@@ -10,6 +10,9 @@ namespace LeaveManagement.API.Mappings
         {
             CreateMap<Employee, EmployeeDto>().ReverseMap();
             CreateMap<AddEmployeeRequestDto, Employee>().ReverseMap();
+            CreateMap<Leave, LeaveDto>().ReverseMap();
+            CreateMap<AddLeaveRequestDto, Leave>().ReverseMap();
+
         }
     }
 }
