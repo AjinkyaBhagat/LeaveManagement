@@ -9,6 +9,7 @@ namespace LeaveManagement.API.Mappings
         public AutomapperProfiles()
         {
             CreateMap<Employee, EmployeeDto>().ReverseMap();
+            CreateMap<AddEmployeeRequestDto, Employee>().ReverseMap();
         }
     }
 }

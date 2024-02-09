@@ -2,7 +2,7 @@
 
 namespace LeaveManagement.API.Repositories.Service
 {
-    public class Leave:ILeave
+    public class LeaveService:ILeave
     {
     }
 }

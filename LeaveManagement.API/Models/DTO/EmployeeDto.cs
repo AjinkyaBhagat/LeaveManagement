@@ -6,27 +6,27 @@ namespace LeaveManagement.API.Models.DTO
 {
     public class EmployeeDto
     {
-        [Key]
-        public Guid LeaveId { get; set; }
-
-        [Required]
         public Guid EmployeeId { get; set; }
 
-        [ForeignKey(nameof(EmployeeId))]
-        public virtual Employee Employee { get; set; }
+        [Required]
+        public string FirstName { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+        public string LastName { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
-        [Required]
-        public string LeaveType { get; set; }
-        [Required]
-        public string Reason { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
-        public string Status { get; set; }
+        public DateTime BirthDate { get; set; }
+        [Required]
+  
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Designation { get; set; }
+        public int LeavesAvailable { get; set; }
+        public int LeavesTotal { get; set; }
     }
 }

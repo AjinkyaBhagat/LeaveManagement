@@ -18,8 +18,8 @@ builder.Services.AddDbContext<LeaveManagementDBContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("LeaveManagementConnectionString")));
 
 //Dependancy Injection
-builder.Services.AddScoped<IEmployee, Employee>();
-builder.Services.AddScoped<ILeave, Leave>();
+builder.Services.AddScoped<IEmployee, EmployeeService>();
+builder.Services.AddScoped<ILeave, LeaveService>();
 
 //AutoMapper Injection
 builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
