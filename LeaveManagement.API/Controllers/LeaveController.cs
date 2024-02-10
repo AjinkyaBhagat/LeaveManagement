@@ -31,7 +31,7 @@ namespace LeaveManagement.API.Controllers
             return Ok(leaveDto);
         }
 
-        //Get Leave By Id
+        //Get Employee Leaves By Id
         [HttpGet]
         [Route("GetById/{id}")]
         public async Task<IActionResult> GetByID([FromRoute] Guid id)

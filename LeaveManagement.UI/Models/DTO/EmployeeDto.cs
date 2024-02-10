@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using LeaveManagement.API.Models.Domain;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LeaveManagement.API.Models.DTO
+namespace LeaveManagement.UI.Models.DTO
 {
-    public class AddEmployeeRequestDto
+    public class EmployeeDto
     {
-        //public Guid EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
 
         [Required]
         public string FirstName { get; set; }
@@ -18,16 +16,15 @@ namespace LeaveManagement.API.Models.DTO
         [EmailAddress]
         public string Email { get; set; }
 
-
         [Required]
         public string Password { get; set; }
-
         public DateTime BirthDate { get; set; }
         [Required]
 
         public string PhoneNumber { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string Designation { get; set; }
         public int LeavesAvailable { get; set; }
         public int LeavesTotal { get; set; }

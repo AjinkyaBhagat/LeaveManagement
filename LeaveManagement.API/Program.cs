@@ -23,6 +23,8 @@ builder.Services.AddScoped<ILeave, LeaveService>();
 
 //AutoMapper Injection
 builder.Services.AddAutoMapper(typeof(AutomapperProfiles));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

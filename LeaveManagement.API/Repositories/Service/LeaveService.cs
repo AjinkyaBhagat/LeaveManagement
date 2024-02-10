@@ -28,7 +28,7 @@ namespace LeaveManagement.API.Repositories.Service
 
         public async Task<Leave> GetByIdAsync(Guid id)
         {
-            return await dBContext.Leaves.FirstOrDefaultAsync(x => x.LeaveId == id);
+            return await dBContext.Leaves.FirstOrDefaultAsync(x => x.EmployeeId == id);
         }
     }
 }

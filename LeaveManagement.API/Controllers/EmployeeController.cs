@@ -70,7 +70,8 @@ namespace LeaveManagement.API.Controllers
             employeeDomin = await employee.CreateAsync(employeeDomin);
 
             var employeeDto = mapper.Map<EmployeeDto>(employeeDomin);
-            return CreatedAtAction(nameof(GetByID), new { id = employeeDto.EmployeeId }, employeeDto);
+            //return CreatedAtAction(nameof(GetByID), new { id = employeeDto.EmployeeId }, employeeDto);
+            return Ok(employeeDto);
         }
     }
 }
