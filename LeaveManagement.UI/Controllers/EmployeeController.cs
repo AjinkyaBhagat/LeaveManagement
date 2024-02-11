@@ -102,6 +102,9 @@ namespace LeaveManagement.UI.Controllers
                 var response = await httpResponseMessage.Content.ReadFromJsonAsync<LoginDto>();
                 HttpContext.Session.SetString("UserSession", response.Email);
                 HttpContext.Session.SetString("EmployeeIdSession", response.EmployeeId.ToString());
+                HttpContext.Session.SetString("FirstNameSession", response.FirstName.ToString());
+                HttpContext.Session.SetString("LastNameSession", response.LastName.ToString());
+
                 return RedirectToAction("Dashboard", "Employee");
             }
             else
@@ -133,8 +136,10 @@ namespace LeaveManagement.UI.Controllers
         {
             if (HttpContext.Session.GetString("UserSession") != null)
             {
-                 HttpContext.Session.Remove("UserSession");
+                HttpContext.Session.Remove("UserSession");
                 HttpContext.Session.Remove("EmployeeIdSession");
+                HttpContext.Session.Remove("FirstNameSession");
+                HttpContext.Session.Remove("LastNameSession");
 
                 return RedirectToAction("Login", "Employee");
             }

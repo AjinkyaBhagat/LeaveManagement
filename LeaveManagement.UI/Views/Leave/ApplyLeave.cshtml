@@ -1,0 +1,109 @@
+﻿@model LeaveManagement.UI.Models.DTO.LeaveDto
+
+@{
+    ViewData["Title"] = "ApplyLeave";
+
+    // Concatenate first name and last name
+    var firstName = ViewBag.FirstNameSession ?? "";
+    var lastName = ViewBag.LastNameSession ?? "";
+    var fullName = firstName + lastName;
+
+    // Get the last 4 digits of EmpIdSession
+    var empId = ViewBag.EmpId ?? "";
+    var last4Digits = empId.Length >= 4 ? empId.Substring(empId.Length - 4) : empId;
+}
+
+<h3>Apply Leave</h3>
+<hr />
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <form asp-action="ApplyLeave" class="mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <input asp-for="EmployeeId" class="form-control" value="@ViewBag.EmpId" readonly hidden />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label">Employee ID</label>
+                <input asp-for="EmployeeId" class="form-control" value="@fullName - @last4Digits" readonly />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label">From</label>
+                <input asp-for="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label">To</label>
+                <input asp-for="EndDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LeaveType" class="control-label">Leave Type</label>
+                <select asp-for="LeaveType" class="form-select">
+                    <option value="">-- Select Leave Type --</option>
+                    <option value="Compensatory off">Compensatory off</option>
+                    <option value="Forgot ID Card">Forgot ID Card</option>
+                    <option value="Out of Office On-Duty">Out of Office On-Duty</option>
+                    <option value="Paid Leave">Paid Leave</option>
+                    <option value="Unpaid Leave">Unpaid Leave</option>
+                    <option value="Work From Home">Work From Home</option>
+                </select>
+                <span asp-validation-for="LeaveType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Reason" class="control-label">Reason</label>
+                <textarea asp-for="Reason" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label">Status</label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class=" card mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+            <div class="card-header">
+                As of @DateTime.Now.ToString("yyyy-MM-dd")
+                <span class="float-end">Day(s)</span>
+            </div>
+          
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    Available balance
+                    <span class="float-end">2.5</span>
+                </li>
+                <li class="list-group-item">
+                    Currently booked
+                    <span class="float-end">3.5</span>
+                </li>
+                <li class="list-group-item">
+                    Balance after booked leave
+                    <span class="float-end">1.5</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="EmployeeLeaves">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,6 +1,9 @@
 ﻿using LeaveManagement.UI.Models.Domain;
 using LeaveManagement.UI.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 namespace LeaveManagement.UI.Controllers
 {
@@ -13,7 +16,7 @@ namespace LeaveManagement.UI.Controllers
             this.httpClientFactory = httpClientFactory;
         }
 
-        //Get All Leaves of single emplyeee
+        //Get All Leaves of single employee
         public async Task<IActionResult> EmployeeLeaves()
         {
             if (HttpContext.Session.GetString("UserSession") != null && (HttpContext.Session.GetString("EmployeeIdSession") != null))
@@ -30,6 +33,54 @@ namespace LeaveManagement.UI.Controllers
             else
             {
                 return RedirectToAction("Login", "Employee");
+            }
+            return View();
+        }
+
+        //Create Leave in DB
+        [HttpGet]
+        [Route("Leave/Apply")]
+        public async Task<IActionResult> ApplyLeave()
+        {
+
+            if (HttpContext.Session.GetString("UserSession") == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            ViewBag.EmpId =HttpContext.Session.GetString("EmployeeIdSession");
+            ViewBag.LastNameSession = HttpContext.Session.GetString("LastNameSession");
+            ViewBag.FirstNameSession = HttpContext.Session.GetString("FirstNameSession");
+            return View();
+        }
+
+        //Create Leave in DB
+        [HttpPost]
+        [Route("Leave/Apply")]
+        public async Task<IActionResult> ApplyLeave(LeaveDto leaveDto)
+        {
+
+            if (HttpContext.Session.GetString("UserSession") == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            ViewBag.EmpId = HttpContext.Session.GetString("EmployeeIdSession");
+            ViewBag.EmpFirstName = HttpContext.Session.GetString("FirstNameSession");
+            ViewBag.EmpLastName = HttpContext.Session.GetString("LastNameSession");
+            var client = httpClientFactory.CreateClient();
+            var jsonContent = JsonSerializer.Serialize(leaveDto);
+            var httpRequestMessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://localhost:7062/api/Leave/ApplyForLeave"),
+                Content = new StringContent(jsonContent, Encoding.UTF8, "application/json")
+            };
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+            httpResponseMessage.EnsureSuccessStatusCode();
+
+            var response = await httpResponseMessage.Content.ReadFromJsonAsync<LeaveDto>();
+            if (response != null)
+            {
+                return RedirectToAction("EmployeeLeaves", "Leave");
             }
             return View();
         }

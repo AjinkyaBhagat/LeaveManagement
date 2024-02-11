@@ -10,5 +10,6 @@ namespace LeaveManagement.API.Models.DTO
 
         [Required]
         public string Password { get; set; }
+
     }
 }

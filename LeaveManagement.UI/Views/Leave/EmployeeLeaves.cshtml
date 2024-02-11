@@ -7,17 +7,17 @@
 <h1>EmployeeLeaves</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="ApplyLeave" asp-controller="Leave">Apply Leave</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.LeaveId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmployeeId)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
@@ -30,21 +30,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Reason)
             </th>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.Status)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.LeaveId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
@@ -57,9 +57,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Reason)
             </td>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.Status)
-            </td>
+            </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
