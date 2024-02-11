@@ -45,7 +45,8 @@ namespace LeaveManagement.API.Controllers
             }
 
             // Map/Convert Leave Domain Model to Leave DTO.
-            return Ok(mapper.Map<LeaveDto>(leaveDomain));
+           // return Ok(mapper.Map<LeaveDto>(leaveDomain));
+           return Ok(leaveDomain);
         }
 
         //Add Leave to DB

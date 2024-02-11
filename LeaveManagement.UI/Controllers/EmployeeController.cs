@@ -73,13 +73,15 @@ namespace LeaveManagement.UI.Controllers
             return View();
         }
 
+        //Login
         [HttpGet]
         [Route("Employee/Login")]
         public async Task<IActionResult> Login()
         {
             return View();
         }
-
+        
+        //Login Post Request
         [HttpPost]
         [Route("Employee/Login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
@@ -99,6 +101,7 @@ namespace LeaveManagement.UI.Controllers
             {
                 var response = await httpResponseMessage.Content.ReadFromJsonAsync<LoginDto>();
                 HttpContext.Session.SetString("UserSession", response.Email);
+                HttpContext.Session.SetString("EmployeeIdSession", response.EmployeeId.ToString());
                 return RedirectToAction("Dashboard", "Employee");
             }
             else
@@ -116,6 +119,7 @@ namespace LeaveManagement.UI.Controllers
             if (HttpContext.Session.GetString("UserSession") != null)
             {
                 ViewBag.MySession = HttpContext.Session.GetString("UserSession").ToString();
+                ViewBag.EmployeeId = HttpContext.Session.GetString("EmployeeIdSession").ToString();
             }
             else
             {
@@ -124,12 +128,15 @@ namespace LeaveManagement.UI.Controllers
             return View();
         }
 
+        //Logout
         public IActionResult Logout()
         {
             if (HttpContext.Session.GetString("UserSession") != null)
             {
                  HttpContext.Session.Remove("UserSession");
-                 return RedirectToAction("Login", "Employee");
+                HttpContext.Session.Remove("EmployeeIdSession");
+
+                return RedirectToAction("Login", "Employee");
             }
             return View();
         }

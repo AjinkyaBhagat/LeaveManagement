@@ -26,9 +26,10 @@ namespace LeaveManagement.API.Repositories.Service
             return leave;
         }
 
-        public async Task<Leave> GetByIdAsync(Guid id)
+        public async Task<List<Leave>> GetByIdAsync(Guid id)
         {
-            return await dBContext.Leaves.FirstOrDefaultAsync(x => x.EmployeeId == id);
+            //return await dBContext.Leaves.FirstOrDefaultAsync(x => x.EmployeeId == id);
+            return await dBContext.Leaves.Where(x => x.EmployeeId == id).ToListAsync();
         }
     }
 }

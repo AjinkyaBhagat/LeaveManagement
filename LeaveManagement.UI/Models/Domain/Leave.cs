@@ -1,10 +1,9 @@
-﻿using LeaveManagement.API.Models.Domain;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace LeaveManagement.API.Models.DTO
+namespace LeaveManagement.UI.Models.Domain
 {
-    public class LeaveDto
+    public class Leave
     {
         [Key]
         public Guid LeaveId { get; set; }
@@ -19,7 +18,7 @@ namespace LeaveManagement.API.Models.DTO
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
-        [Required]
+         [Required]
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         [Required]
@@ -28,6 +27,5 @@ namespace LeaveManagement.API.Models.DTO
         public string Reason { get; set; }
 
         public string Status { get; set; }
-
     }
 }

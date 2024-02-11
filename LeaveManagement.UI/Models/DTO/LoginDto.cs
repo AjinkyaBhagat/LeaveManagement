@@ -10,5 +10,7 @@ namespace LeaveManagement.UI.Models.DTO
 
         [Required]
         public string Password { get; set; }
+
+        public Guid EmployeeId { get; set; }
     }
 }

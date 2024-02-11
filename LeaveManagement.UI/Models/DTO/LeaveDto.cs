@@ -1,8 +1,8 @@
-﻿using LeaveManagement.API.Models.Domain;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using LeaveManagement.UI.Models.Domain;
 
-namespace LeaveManagement.API.Models.DTO
+namespace LeaveManagement.UI.Models.DTO
 {
     public class LeaveDto
     {
@@ -28,6 +28,5 @@ namespace LeaveManagement.API.Models.DTO
         public string Reason { get; set; }
 
         public string Status { get; set; }
-
     }
 }
