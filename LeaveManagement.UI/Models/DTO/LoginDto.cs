@@ -18,5 +18,6 @@ namespace LeaveManagement.UI.Models.DTO
 
         [Required]
         public string LastName { get; set; }
+        public int LeavesAvailable { get; set; }
     }
 }

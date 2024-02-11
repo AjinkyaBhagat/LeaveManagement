@@ -10,5 +10,6 @@ namespace LeaveManagement.API.Repositories.Interface
         Task<Employee> CreateAsync(Employee employee);
 
         Task<Employee>GetByIdAsync(Guid id);    
+        Task<Employee> UpdateAsync(Guid id, Employee employee);
     }
 }

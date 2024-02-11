@@ -40,7 +40,7 @@ namespace LeaveManagement.UI.Controllers
         //Create Leave in DB
         [HttpGet]
         [Route("Leave/Apply")]
-        public async Task<IActionResult> ApplyLeave()
+        public IActionResult ApplyLeave()
         {
 
             if (HttpContext.Session.GetString("UserSession") == null)
@@ -50,13 +50,14 @@ namespace LeaveManagement.UI.Controllers
             ViewBag.EmpId =HttpContext.Session.GetString("EmployeeIdSession");
             ViewBag.LastNameSession = HttpContext.Session.GetString("LastNameSession");
             ViewBag.FirstNameSession = HttpContext.Session.GetString("FirstNameSession");
+            ViewBag.LeavesAvailableSession = HttpContext.Session.GetString("LeavesAvailableSession");
             return View();
         }
 
         //Create Leave in DB
         [HttpPost]
         [Route("Leave/Apply")]
-        public async Task<IActionResult> ApplyLeave(LeaveDto leaveDto)
+        public async Task<IActionResult> ApplyLeave(LeaveDto leaveDto,UpdateEmployeeDto updateEmployeeDto)
         {
 
             if (HttpContext.Session.GetString("UserSession") == null)
@@ -66,6 +67,7 @@ namespace LeaveManagement.UI.Controllers
             ViewBag.EmpId = HttpContext.Session.GetString("EmployeeIdSession");
             ViewBag.EmpFirstName = HttpContext.Session.GetString("FirstNameSession");
             ViewBag.EmpLastName = HttpContext.Session.GetString("LastNameSession");
+
             var client = httpClientFactory.CreateClient();
             var jsonContent = JsonSerializer.Serialize(leaveDto);
             var httpRequestMessage = new HttpRequestMessage()
@@ -78,6 +80,7 @@ namespace LeaveManagement.UI.Controllers
             httpResponseMessage.EnsureSuccessStatusCode();
 
             var response = await httpResponseMessage.Content.ReadFromJsonAsync<LeaveDto>();
+            
             if (response != null)
             {
                 return RedirectToAction("EmployeeLeaves", "Leave");

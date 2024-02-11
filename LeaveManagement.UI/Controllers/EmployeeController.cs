@@ -75,7 +75,7 @@ namespace LeaveManagement.UI.Controllers
 
         //Login
         [HttpGet]
-        [Route("Employee/Login")]
+        //[Route("Employee/Login")]
         public async Task<IActionResult> Login()
         {
             return View();
@@ -104,12 +104,12 @@ namespace LeaveManagement.UI.Controllers
                 HttpContext.Session.SetString("EmployeeIdSession", response.EmployeeId.ToString());
                 HttpContext.Session.SetString("FirstNameSession", response.FirstName.ToString());
                 HttpContext.Session.SetString("LastNameSession", response.LastName.ToString());
-
+                HttpContext.Session.SetString("LeavesAvailableSession", response.LeavesAvailable.ToString());
                 return RedirectToAction("Dashboard", "Employee");
             }
             else
             {
-                ViewBag.Message = "Login Faild..Please check Email or Password!!";
+                ViewBag.Message = "Login Faild...Please Check EmailID or Password!!";
             }
             return View();
         }
@@ -140,14 +140,12 @@ namespace LeaveManagement.UI.Controllers
                 HttpContext.Session.Remove("EmployeeIdSession");
                 HttpContext.Session.Remove("FirstNameSession");
                 HttpContext.Session.Remove("LastNameSession");
+                HttpContext.Session.Remove("LeavesAvailableSession");
 
                 return RedirectToAction("Login", "Employee");
             }
             return View();
         }
-
-
-
     }
 
 }

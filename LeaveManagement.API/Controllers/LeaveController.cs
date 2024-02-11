@@ -58,6 +58,7 @@ namespace LeaveManagement.API.Controllers
             leaveDomin = await leave.CreateAsync(leaveDomin);
 
             var leaveDto = mapper.Map<LeaveDto>(leaveDomin);
+
             return CreatedAtAction(nameof(GetByID), new { id = leaveDto.LeaveId }, leaveDto);
         }
     }

@@ -4,69 +4,60 @@
     ViewData["Title"] = "EmployeeLeaves";
 }
 
-<h1>EmployeeLeaves</h1>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<p>
-    <a asp-action="ApplyLeave" asp-controller="Leave">Apply Leave</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-@*            <th>
-                @Html.DisplayNameFor(model => model.LeaveId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeId)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeaveType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reason)
-            </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.LeaveId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeaveType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-<a asp-controller="Employee" asp-action="Logout" class="btn btn-danger mt-5">Logout</a>
+<div class="col-12 mt-3 mb-1">
+    <h4 class="text-uppercase">Leave Details</h4>
+</div>
+<div class="container">
+    <a asp-action="ApplyLeave" asp-controller="Leave" class="btn m-auto btn-sm btn-warning text-white">Apply Leave</a>
+    <div class="row">
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="overflow-hidden card table-nowrap table-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">History</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead class="small text-uppercase bg-body text-white">
+                            <tr>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Leave Type</th>
+                                <th>Reason</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LeaveType)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                                    <td>
+                                        <div class="drodown">
+                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
+                                                <i class="fa fa-bars" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end" style="">
+                                                <a href="#!" class="dropdown-item">Edit</a>
+                                                <a href="#!" class="dropdown-item">Details</a>
+                                                <a href="#!" class="dropdown-item">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>               
+                </div>
+                
+            </div>
+            <a asp-controller="Employee" asp-action="Logout" class="btn btn-danger text-white btn-sm ">Logout</a>
+        </div>
+    </div>
+</div>
+
+

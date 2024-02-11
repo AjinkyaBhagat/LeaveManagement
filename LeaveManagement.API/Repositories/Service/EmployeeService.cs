@@ -39,6 +39,19 @@ namespace LeaveManagement.API.Repositories.Service
         {
             return await dBContext.Employees.FirstOrDefaultAsync(x => x.Email == loginDto.Email && x.Password == loginDto.Password);
         }
+
+        public async Task<Employee> UpdateAsync(Guid id, Employee employee)
+        {
+            var existingEmployee = await dBContext.Employees.FirstOrDefaultAsync(x => x.EmployeeId == id);
+            if (existingEmployee == null)
+            {
+                return null;
+            }
+            existingEmployee.LeavesAvailable= employee.LeavesAvailable;
+            await dBContext.SaveChangesAsync();
+            return existingEmployee;
+
+        }
     }
 }
 

@@ -73,5 +73,20 @@ namespace LeaveManagement.API.Controllers
             //return CreatedAtAction(nameof(GetByID), new { id = employeeDto.EmployeeId }, employeeDto);
             return Ok(employeeDto);
         }
+
+        //Update the values
+        [HttpPut]
+        [Route("Update/Guid:{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateEmployeeDto updateEmployeeDto)
+        {
+            var employeeDomain = mapper.Map<Employee>(updateEmployeeDto);
+             employeeDomain = await employee.UpdateAsync(id, employeeDomain);
+            if (employeeDomain == null)
+            {
+                return NotFound();
+            }
+            var employeeDto=mapper.Map<EmployeeDto>(employeeDomain);
+            return Ok(employeeDto);
+        }
     }
 }

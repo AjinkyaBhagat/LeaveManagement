@@ -33,13 +33,13 @@
 
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label">From</label>
-                <input asp-for="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <input asp-for="StartDate" class="form-control" type="date" onchange="calculateDays()" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="EndDate" class="control-label">To</label>
-                <input asp-for="EndDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <input asp-for="EndDate" class="form-control" type="date" onchange="calculateDays()" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
 
@@ -64,18 +64,18 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Status" class="control-label">Status</label>
-                <input asp-for="Status" class="form-control" />
+                <label asp-for="Status" class="control-label">Team Email ID</label>
+                <input asp-for="Status" class="form-control" type="email" />
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Apply</button>
+            <div class="form-group mt-2 w-100 justify-content-center ">
+                <button type="submit" class="btn btn-warning text-white w-100">Apply</button>
             </div>
         </form>
     </div>
     <div class="col-md-6 mx-auto">
-        <div class=" card mt-3 p-3 border rounded" style="background-color: #f8f9fa;">
+        <div class=" card mt-3 p-3 border rounded" id="compensatoryOffCard" style="background-color: #f8f9fa;">
             <div class="card-header">
                 As of @DateTime.Now.ToString("yyyy-MM-dd")
                 <span class="float-end">Day(s)</span>
@@ -84,26 +84,81 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     Available balance
-                    <span class="float-end">2.5</span>
+                    <span class="float-end">@ViewBag.LeavesAvailableSession</span>
                 </li>
                 <li class="list-group-item">
                     Currently booked
-                    <span class="float-end">3.5</span>
+                    <span class="float-end" id="numberOfDays"></span>
                 </li>
                 <li class="list-group-item">
                     Balance after booked leave
-                    <span class="float-end">1.5</span>
+                    <span class="float-end" id="balanceAfterLeave"></span>
                 </li>
             </ul>
         </div>
+        <div>
+            <a asp-action="EmployeeLeaves" class="btn btn-link">Back to List</a>
+        </div>
     </div>
 </div>
+<a asp-controller="Employee" asp-action="Logout" class="btn btn-danger mt-2 btn-sm">Logout</a>
+@section scripts {
+    <script>
+        var leavesAvailable = @ViewBag.LeavesAvailableSession;
 
+        function calculateDays() {
+            var startDate = new Date($('#StartDate').val());
+            var endDate = new Date($('#EndDate').val());
 
-<div>
-    <a asp-action="EmployeeLeaves">Back to List</a>
-</div>
+            if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                var timeDiff = endDate - startDate;
+                var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                var availableBalance = parseInt(leavesAvailable) || 0;
+                var currentlyBookedDays = parseInt($('#CurrentlyBookedDays').val()) || 0;
+
+                // Calculate balance after booked leave
+                var balanceAfterLeave = availableBalance - currentlyBookedDays - daysDiff;
+
+                // Set the text color based on the balance value
+                $('#numberOfDays').text(daysDiff + ' day(s)');
+                $('#balanceAfterLeave').text(balanceAfterLeave + ' day(s)').css('color', balanceAfterLeave < 0 ? 'red' : 'black');
+            } else {
+                $('#numberOfDays').text('');
+                $('#balanceAfterLeave').text('').css('color', 'black');
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Hide the card initially if "Compensatory off" is selected
+            toggleCardVisibility();
+
+            // Attach a change event listener to the dropdown
+            $("#LeaveType").change(function () {
+                toggleCardVisibility();
+            });
+
+            function toggleCardVisibility() {
+                // Get the selected value from the dropdown
+                var selectedValue = $("#LeaveType").val();
+
+                // Get the card element
+                var card = $("#compensatoryOffCard");
+
+                // Check if the selected value is "Compensatory off"
+                // If yes, hide the card; otherwise, show it
+                if (selectedValue === "Compensatory off") {
+                    card.hide();
+                } else {
+                    card.show();
+                }
+            }
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
